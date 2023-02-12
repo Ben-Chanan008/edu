@@ -1,0 +1,186 @@
+@font-face{
+	src: url("Raleway/static/Raleway-Black.ttf");
+	font-family: 'raleway';
+}
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
+	font-family: 'raleway', 'monospace';
+	margin-bottom: 500px;
+	position: relative;
+}
+
+.first-nav{
+	background-color: #0000ff;
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.second-nav{
+	position: sticky;
+	top: 0;
+}
+
+.first-nav > .socials{
+	margin-left: 50px;
+}
+
+.first-nav > div{
+	margin-right: 30px;
+}
+
+.btn{
+	padding: 9px;
+	background-color: greenyellow;
+	color: #fff;
+	border: none;
+	margin:0 20px;
+}
+
+.socials > span{
+	border: none;
+	padding: 0 10px;
+	border-right:1px solid #ffffff;
+}
+
+.section{
+	background-image: linear-gradient(to right, #353597, transparent);
+	color: #ffff;
+	position: relative;
+	min-height: 500px;
+}
+
+a{
+	color: #fff;
+	text-decoration: none;
+}
+
+.section > nav{
+	display:flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.section > nav ul{
+	display: flex;
+}
+
+.menu{
+	background-color: transparent;
+	border: none;
+	color: #fff;
+}
+
+.menu i{
+	padding: 0 5px;
+}
+
+.section > nav ul li{
+	padding: 0 10px;
+	list-style-type: none;
+	font-size: 10px;
+}
+
+.whole{
+	display: flex;
+	align-items: center;
+}
+
+.whole .text {
+	font-size: 10px;
+	margin: 0 5px;
+}
+
+.book{
+	background-color: aqua;
+	border: none;
+	padding: 10px;
+	color: #fff;
+	font-weight: 900;
+}
+
+.inner-text{
+	position: absolute;
+	top: 30%;
+	font-size: 40px;
+	left: 40px;
+	line-height: 5.3rem;
+}
+
+.inner-text > div p{
+	font-family: 'agency fb', 'monospace';
+}
+
+.inner-text i{
+	background-color: #000074;
+	padding: 10px;
+	position: absolute;
+	top: 50%;
+	left: 150%;
+	cursor: pointer;
+	border-radius: 50%;
+}
+
+.inner-text .fa-arrow-right{
+	left: 337%;
+	z-index: 100;
+}
+
+.inner-text span{
+	font-size: 70px;
+	/* line-height: 20px; */
+}
+
+.images img{
+	position: absolute;
+	border: 4px solid #000;
+	width: 600px;
+	top: 0;
+	left: 170%;
+	height: 300px;
+	object-fit: cover;
+	mix-blend-mode: overlay;
+	transition: all .2s;
+}
+
+.grid > div{
+	background-color: #000;
+	color: #fff;
+	margin:0 0;
+	padding: 90px 0;
+	text-align: center;
+}
+
+.grid >*:first-child{
+	background-color: #000074;
+}
+
+.grid >*:nth-of-type(2){
+	background-color: #ff7f50;
+}
+
+.grid >*:nth-of-type(3){
+	background-color: #3f83bb;
+}
+
+.grid >*:last-child{
+	background-color: #9e13b1;
+}
+
+.grid{
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+}
+/* 
+.slide{
+	transform: ;
+	transition: transform .2s;
+} */
