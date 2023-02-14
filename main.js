@@ -28,19 +28,17 @@ slide = function(direction){
     document.slider.src = image[activeSlider];
 }
 const second = document.querySelector('.second-nav');
+let tops = 0;
 
-window.addEventListener('scroll', () => {
-    second.style.backgroundColor = '#fff'
-    second.style.color = '#000'
-    second.style.padding = '20px'
-    second.style.transition = 'all .4s'
-    second.style.boxShadow = '10px 10px 30px rgba(0,0,0,.5)'
-});
-if(!slide()){
-    setInterval(() => {
-        setTimeout("slide()", 1500)
-    }, 10)
-}
+const stats = document.querySelector('.stats');
+stats.clientHeight = 100
+
+// console.log(top)
+// if(!slide()){
+//     setInterval(() => {
+//         setTimeout("slide()", 1500)
+//     }, 10)
+// }
 // gsap.fromTo(slidingAnimation, {opacity: 0}, {opacity: 1}, {duration: 1});
 // window.onload =     console.log(activeSlider, document.slider.src);
 // window.onload = activeSlider
