@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./plugins/css/all.css">
 </head>
 
-<body>
+<body id="index-page">
     <div class="spinner">
         <div>
             <i class="fa fa-spin fa-spinner-third fa-5x"></i>

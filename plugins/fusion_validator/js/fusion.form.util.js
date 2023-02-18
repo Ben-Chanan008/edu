@@ -874,11 +874,11 @@ const $fb = {
 			responseData = response;
 			status = responseData.status;
 			statusText = responseData.statusText;
-			
 			return (response.ok || status > 299 && status < 400 || allowedErrorStatuses.has(status)) ? response[dataType]() : Promise.reject(response);
 		}).then(data => {
+			console.log(data)
 			responseData.responseText = data;
-			responseData.responseJSON = dataType === 'json' ? JSON.parse(data) : null;
+			responseData.responseJSON = dataType === 'json' ? data : JSON.parse(data);
 			status > 199 && status < 300 && typeof onSuccess === 'function' && onSuccess(responseData, status, statusText)
 			typeof onComplete === 'function' && onComplete(responseData, status, statusText);
 		}).catch(err => typeof onError === 'function' && onError(err, status, statusText));
