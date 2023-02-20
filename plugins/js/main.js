@@ -61,6 +61,7 @@ if (document.querySelector('#register-page')) {
     const phoneErr = document.querySelector('#phoneValid');
     const minLength = passwordField.getAttribute('minlength');
     const maxLength = passwordField.getAttribute('maxlength');
+    const pass = document.querySelector('.fa-eye');
     const errors = {
         nameErr: '<div class="text-danger p-1">Name needed please</div>',
         emailErr: '<div class="text-danger p-1">Email needed please</div>',
@@ -68,10 +69,31 @@ if (document.querySelector('#register-page')) {
         phoneFirstErr: '<div class="text-danger p-1">Phone number please</div>',
         phoneSecondErr: '<div class="text-danger p-1">Must be numbers</div>',
     }
+    
+    pass.addEventListener('click', () => {
+        pass.classList.remove('fa-eye');
+        pass.classList.add('fa-eye-slash');
+        passwordField.setAttribute('type', 'text')
+        // if(passwordField.setAttribute('type', 'text')){
+            pass.addEventListener('dblclick', () => {
+                pass.classList.remove('fa-eye-slash');
+                pass.classList.add('fa-eye');
+                passwordField.setAttribute('type', 'password')
+            });
+        // }
+    });
+    
+    passwordField.addEventListener('input', () => {
+        console.log(pass)
+        pass.classList.add('block');
+    });
     // console.log(errors.phoneFirstErr)
     form.addEventListener('submit', (e) => validate(e))
     function validate(e){
-        // console.log(e)
+        let hasError = true;
+            data = new FormData(e.currentTarget);
+        console.log(e.currentTarget)
+
         e.preventDefault();
         
         if(nameField.value === '' && emailField.value === '' && phoneField.value === '' && passwordField.value === ''){
@@ -111,8 +133,44 @@ if (document.querySelector('#register-page')) {
                 hasError = false
         }
         console.log(hasError)
-
-    };
+        
+        if(hasError === false){
+            let xhr = new XMLHttpRequest();
+            xhr.onload = function(){
+                const res = JSON.parse(xhr.response);
+                const status = xhr.status;
+                const message = document.querySelector('#register-form .message');
+                // console.log(message)
+                console.log(res)
+                if(status > 199 && status < 300){
+                    message.innerHTML = `<div class="alert alert-success p-1 m-2 w-100 px-2">${res.message}</div>`
+                    window.history.pushState('home', 'home', './logged_in.php')
+                    setTimeout(() => {
+                        location.href = res.redirect    
+                    }, 2000);
+                    // console.log(status)
+                } else {
+                    if(status === 422){
+                        message.innerHTML = `<div clas="alert alert-danger p-1 m-3 px-2">${res.message}</div>`;
+                        if(Object.keys(res.errors).length){
+                            Object.keys(res.errors).forEach(function(key){
+                                console.log(key)
+                                const element = document.getElementById(key);
+                                element.innerHTML = `<div class="alert alert-danger p-1 px-2" style="font-size: 11px;">${res.errors[key]}<a class="px-3" href="./login.php" style="color:#000; text-decoration:underline;">Log in</a></div>`;
+                            });
+                        }
+                        if(res.message.length){
+                            message.innerHTML = `<div class="alert alert-danger p-1 px-2">${res.message}</div>`
+                        }
+                        // console.log(status)
+                    }
+                }
+            }
+            xhr.open("POST", e.currentTarget.getAttribute('action'));
+            xhr.send(data)
+        }        
+    }
+   
     phoneField.addEventListener('input', (e) => {
         if(!phoneField.value.match(/^[0-9]*$/gi)){
             phoneErr.innerHTML = `${errors.phoneSecondErr}`
@@ -147,19 +205,57 @@ if (document.querySelector('#register-page')) {
         passErr.innerHTML = ''
         // console.log(title());
     });
-    let hasError = true;
-    
-    if(hasError === false){
-        let xhr = new XMLHttpRequest();
-        xhr.onload = function(){
-            const res = JSON.parse(xhr.response);
-            const status = xhr.status;
-        }
-    }        
-    
     function clearErr() { 
         const nameClear = {
         }
         // nameErr.innerHTML = ''
     }
-}      
+}
+
+if(document.querySelector('#login')){
+    const attrib = document.form.getAttribute('action');
+    const form = document.querySelector('form');
+    console.log(attrib)
+    const emailErr = document.querySelector('.emailErr');
+    const passErr = document.querySelector('.passErr');
+    const message = document.querySelector('.message');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let xhr = new XMLHttpRequest();
+        data = new FormData(form)
+        xhr.onload = function(){    
+            const res = JSON.parse(xhr.response);
+            const status = xhr.status;
+            // console.log(status)
+        if(status === 422){
+            emailErr.innerHTML = `<div class="alert alert-danger p-1 px-2 m-2">${res.message}</div>`;
+            passErr.innerHTML = `<div class="alert alert-danger p-1 px-2 m-2">${res.message}</div>`;
+        } else{
+            console.log(status)
+            if(status > 199 && status < 300){
+                message.innerHTML = `<div class="alert alert-success p-1 px-2 mx-2"><i class="fa fa-spin fa-spinner-third m-2"></i>${res.message}</div>`
+            }
+            if(status === 400){
+                message.innerHTML = `<div class="alert alert-danger p-1 px-2 m-2">${res.message}</div>`
+            } else{
+                if(status === 200){
+                    console.log(res.redirect);
+                    // function redirect(){
+                    //     res.redirect;
+                    // }
+                    window.history.pushState('home', 'home', './edu.php')
+                    setTimeout(() => {
+                        message.innerHTML = `<div class="alert alert-success p-1 px-2 m-2"><i class="fa fa-spin fa-spinner-third mx-2"></i>${res.message}</div>`;
+                        location.href = res.redirect;
+                    }, 1500);
+                }
+            }
+            console.log(data)
+        }
+    }
+    console.log(data)
+    xhr.open("POST", `${attrib}`);
+    xhr.send(data);
+    });
+
+}

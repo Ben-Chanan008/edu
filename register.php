@@ -32,12 +32,20 @@
                 <div id="nameValid" class="valid-text"></div>
                 <input type="email" id="email" name="email" placeholder="Email">
                 <div id="emailValid" class="valid-text"></div>
-                <input minlength="8" maxlength="32" type="password" name="password" id="password" name="password" placeholder="Password">
+                <div class="position-relative">
+                    <input class="position-relative" minlength="8" maxlength="32" type="password" name="password" id="password" name="password" placeholder="Password">
+                    <i class="fa-solid fa-eye position-absolute end-0 bottom-0 my-3"></i>
+                </div>
                 <div id="passwordValid" class="valid-text"></div>
                 <label for="phone-number">Phone Number</label>
                 <input type="tel" id="phone-number" placeholder="Phone No" name="phone_number">
                 <div id="phoneValid" class="valid-text"></div>
                 <input type="submit" value="Submit" class="mt-4">
+                <div class="login">
+                    <p>Already have an account</p>
+                    <a href="./login.php"><span style="color: #ff7f50; text-decoration: underline;">Login</span></a>
+                </div>
+                <div class="message"></div>
         </div>
         </form>
     </div>

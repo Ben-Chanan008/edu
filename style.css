@@ -49,6 +49,10 @@ body {
 	margin: 0 20px;
 }
 
+.btn:hover {
+	cursor: pointer;
+}
+
 .socials > span {
 	border: none;
 	padding: 0 10px;
@@ -140,6 +144,11 @@ a {
 .inner-text .fa-arrow-right {
 	z-index: 100;
 	left: 75%;
+}
+
+.inner-text .fa-arrow-right:hover,
+.inner-text .fa-arrow-left:hover {
+	cursor: pointer;
 }
 
 .inner-text .fa-arrow-left {
