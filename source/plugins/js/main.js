@@ -259,3 +259,7 @@ if(document.querySelector('#login')){
     });
 
 }
+
+if(document.querySelector('#choose')){
+    
+}

@@ -1,0 +1,119 @@
+@font-face {
+	font-family: "raleway";
+	src: url("./plugins/fonts/Raleway/static/Raleway-Light.ttf");
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+}
+
+body {
+	font-family: "raleway";
+	background-color: #000;
+	color: #fff;
+}
+
+.nav-b {
+	display: flex;
+	justify-content: space-around;
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+}
+
+.nav-b ul {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.nav-b ul li {
+	list-style: none;
+	padding: 0 10px;
+}
+
+.nav-b ul li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* .last {
+	
+} */
+
+.last > i {
+	border-radius: 50%;
+	color: #000;
+	background-color: #fff;
+	padding: 5px;
+	margin-top: 10px;
+}
+
+h1 {
+	font-family: "raleway";
+	margin: 10px 0;
+	font-size: 70px;
+	text-align: center;
+	animation: slideIn 0.5s ease-in-out;
+	/* animation: left 0.5s ease-in-out; */
+}
+
+a {
+	color: #ffff;
+	text-decoration: none;
+}
+
+.course-list {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	margin: 0 0px;
+	align-items: center;
+	justify-content: center;
+	/* gap: 20px; */
+	/* word-break: keep-all; */
+	flex-wrap: inherit;
+}
+
+.course-list li {
+	background-color: #fff;
+	padding: 50px;
+	margin: 10px;
+	color: #000;
+	text-align: center;
+	/* margin: 0 0; */
+	border: 1px solid #fff;
+	list-style: none;
+	/* flex-wrap: wrap; */
+	width: 400px;
+	/* height: 200px;  */
+}
+
+.course-list li:hover {
+	background-color: #000;
+	border: none;
+	font-weight: 900;
+	color: #fff;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateY(-100%);
+	}
+	to {
+		transform: translateY(0%);
+	}
+}
+
+@keyframes left {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(0%);
+	}
+}
