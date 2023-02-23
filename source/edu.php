@@ -32,7 +32,9 @@ if (!$user)
             </ul>
         </nav>
         <div class="last">
-            <i class="fa-regular fa-user fa-2x"></i>
+            <a href="./profile.php">
+                <i class="fa-regular fa-user fa-2x"></i>
+            </a>
         </div>
     </div>
     <section class="buy">

@@ -4,32 +4,32 @@ include './session.php';
 $hasErr = true;
 $data = [];
 if ($user)
-    header('Location: ./edu.php');
+	header('Location: ./edu.php');
 if (!empty($_POST)) {
-    // http_response_code(200);
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    if (empty($email) && empty($password)) {
-        $data['message'] = 'Please fill in fields';
-        http_response_code(422);
-    } else {
-        // http_response_code(200);
-        // $data['message'] = 'Login successful <br> Please Wait...';
-        $query = $conn->query("SELECT * FROM user_info WHERE email = '$email'");
-        $user  = $query->fetch_object();
+	// http_response_code(200);
+	$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+	if (empty($email) && empty($password)) {
+		$data['message'] = 'Please fill in fields';
+		http_response_code(422);
+	} else {
+		// http_response_code(200);
+		// $data['message'] = 'Login successful <br> Please Wait...';
+		$query = $conn->query("SELECT * FROM user_info WHERE email = '$email'");
+		$user = $query->fetch_object();
 
-        if ($query->num_rows && password_verify($password, $user->password)) {
-            $_SESSION['edu'] = $user->id;
-            $data['message'] = 'Login Successful Please wait...';
-            $data['redirect'] = './edu.php';
-            http_response_code(200);
-        } else {
-            http_response_code(400);
-            $data['message'] = 'Invalid Credentials';
-        }
-    }
-    echo json_encode($data);
-    exit();
+		if ($query->num_rows && password_verify($password, $user->password)) {
+			$_SESSION['edu'] = $user->id;
+			$data['message'] = 'Login Successful Please wait...';
+			$data['redirect'] = './edu.php';
+			http_response_code(200);
+		} else {
+			http_response_code(400);
+			$data['message'] = 'Invalid Credentials';
+		}
+	}
+	echo json_encode($data);
+	exit();
 }
 ?>
 
@@ -52,7 +52,10 @@ if (!empty($_POST)) {
             <h2 class="lead fs-1">Login</h2>
             <input type="email" id="email" name="email" placeholder="Email">
             <div class="emailErr"></div>
-            <input minlength="8" maxlength="32" type="password" name="password" id="password" name="password" placeholder="Password">
+            <div class="position-relative">
+                <input minlength="8" maxlength="32" type="password" name="password" id="password" name="password" placeholder="Password">
+                <i class="fas fa-eye position-absolute end-0 bottom-0 my-3"></i>
+            </div>
             <div class="passErr"></div>
             <input type="submit" value="Submit" name="submit" class="mt-4">
             <div class="sign-up">

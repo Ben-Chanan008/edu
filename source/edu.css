@@ -44,10 +44,10 @@ body {
 	
 } */
 
-.last > i {
+.last > a {
 	border-radius: 50%;
-	color: #000;
-	background-color: #fff;
+	color: #fff;
+	/* background-color: #fff; */
 	padding: 5px;
 	margin-top: 10px;
 }

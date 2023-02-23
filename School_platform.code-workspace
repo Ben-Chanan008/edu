@@ -1,7 +1,10 @@
 {
-    "folders": [
-        {
-            "path": "../php_rest_myblog"
-        }
-    ]
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../php_rest_myblog"
+		}
+	]
 }
