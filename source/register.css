@@ -56,3 +56,8 @@ label {
 .block {
 	display: block !important;
 }
+
+.email:hover,
+.otp:hover {
+	cursor: pointer;
+}

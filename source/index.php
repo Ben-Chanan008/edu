@@ -5,7 +5,8 @@ $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
 if (isset($_POST['submit'])) {
     if (!empty($_POST['email'])) {
         // $conn->query("SELECT * FROM user_info LEFT JOIN news_subscribers ON news_subscribers.user_id=user_info.id");
-        $conn->query("INSERT INTO news_subscribers(email) VALUES($email)");
+        $conn->query("INSERT INTO news_subscribers(email) VALUES('$email')");
+        // echo 'query';
     } else {
         $message = '<span class="bg-red">Fill input please</span>';
     }

@@ -361,7 +361,29 @@ if (document.querySelector('#profile')) {
 
 if(document.querySelector('#fpass')){
 	const attribute = document.form.getAttribute('action');
+	const body = document.querySelector('body');
+
 	console.log(attribute)
+	const keyframe = [
+		{
+			opacity: 0,
+			transform: 'scale(1.2)'
+		},
+		{
+			opacity: 1,
+			transform: 'scale(1)'
+		}
+	]
+	const timing = {
+		duration: 700,
+		iteration: 1,
+	}
+	document.addEventListener('DOMContentLoaded', function () {
+		body.animate(keyframe, timing);
+		setTimeout(() => {
+			body.style.opacity = 1;
+		}, timing.duration)
+	})
 	// document.querySelector('body').style.backgroundColor = "blue";
 	const form = document.querySelector('.my-form');
 	console.log(form)
@@ -380,8 +402,23 @@ if(document.querySelector('#fpass')){
 			const status = xhr.status;
 			console.log(status);
 			if(status === 422){
-				console.log(email.innerHTML = `${res.error}`); 
+				email.innerHTML = `<div class="alert alert-danger m-2"><i class="fa fa-solid fa-exclamation"></i>${res.error}</div>`; 
+				setTimeout(() => {
+					email.innerHTML = '';
+				}, 4000);
+			} else{
 			}
+			if(status === 200){
+				email.innerHTML = `<div class="alert alert-success m-2">${res.message}</div>`;
+				setTimeout(() => {
+					location.href = `${res.redirect}`;
+				}, 2000);
+			}
+			if(res.error.length)
+				email.innerHTML = `<div class="alert alert-danger m-2">${res.error}</div>`;
+			// } else {
+			// 	if(status === 200)
+			// // }
 		}
 		console.log(data)
 		xhr.open("POST",`${attribute}`);
