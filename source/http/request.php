@@ -9,7 +9,7 @@ if (!empty($_POST)) {
 	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 	$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 	$phone_number = filter_input(INPUT_POST, 'phone_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+	
 	if (!empty($name) && !empty($email) && !empty($password) && !empty($phone_number)) {
 		$statement = $conn->query("SELECT * FROM user_info WHERE user_name = '$name'");
 		$statement_email = $conn->query("SELECT * FROM user_info WHERE email = '$email'");

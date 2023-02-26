@@ -189,13 +189,13 @@ if (document.querySelector('#register-page')) {
 		}
 	}
 	
-	phoneField.addEventListener('input', (e) => { 
+	phoneField.addEventListener('input', (e) => {
 		console.log(`${errors.phoneFirstErr}`)
-		if(phoneField.value === ''){
-			phoneErr.innerHTML = `${errors.phoneFirstErr}`;	
+		if (phoneField.value === '') {
+			phoneErr.innerHTML = `${errors.phoneFirstErr}`;
 			// console.log(`${errors.phoneFirstErr}`)
 		}
-		if(phoneField.value !== '')
+		if (phoneField.value !== '')
 			phoneErr.innerHTML = '';
 	});
 	phoneField.addEventListener('input', (e) => {
@@ -204,7 +204,7 @@ if (document.querySelector('#register-page')) {
 			phoneField.value = ''
 		}
 		if (phoneField.value !== '') {
-			if (phoneField.value.match(/^[0-9]*$/gi)){
+			if (phoneField.value.match(/^[0-9]*$/gi)) {
 				phoneErr.innerHTML = '';
 			}
 			// if(phoneField.value === '')
@@ -330,11 +330,11 @@ if (document.querySelector('#profile')) {
 		console.log(camera);
 		if (camera === true) {
 			// picContainer.addEventListener('click', () => {
-				
-				// });
-				console.log('e')
-				setTimeout(() => {
-					picContainer.classList.remove('fa-camera', 'fa-10x');
+			
+			// });
+			console.log('e')
+			setTimeout(() => {
+				picContainer.classList.remove('fa-camera', 'fa-10x');
 				picContainer.classList.add('fa-user', 'fa-7x');
 			}, 3000)
 		}
@@ -342,27 +342,34 @@ if (document.querySelector('#profile')) {
 	edit.addEventListener('click', buttons);
 	const self = "<?php htmlspecialchars($_SERVER['PHP_SELF']);?>";
 	
-	function buttons(){
+	function buttons() {
 		textarea.style.display = 'block';
 		btn.innerHTML = '<div></div>';
 		opBtn.innerHTML = '<button class="bg-red p-2 w-75 text-white rounded" id="del"><i class="fas fa-bin"></i>Cancel</button>'
 		const del = document.getElementById('del');
 		console.log(del)
 		del.addEventListener('click', (e) => {
-			btn.innerHTML='<button class="rounded-3 m-1 p-2 w-75 edit"><i class="fa-solid fa-pen mx-2"></i>Edit Profile</button>'
+			btn.innerHTML = '<button class="rounded-3 m-1 p-2 w-75 edit"><i class="fa-solid fa-pen mx-2"></i>Edit Profile</button>'
 			opBtn.innerHTML = '<div></div>';
 			textarea.innerHTML = '';
-		});	
+		});
 		// setInterval(buttons, 10)
 	}
+	
 	// picContainer.addEventListener('mouseout', (e) => {
 	// });
 }
 
-if(document.querySelector('#fpass')){
+if (document.querySelector('#fpass')) {
 	const attribute = document.form.getAttribute('action');
 	const body = document.querySelector('body');
-
+	const radio = document.querySelectorAll('input');
+	// radio.forEach(function(input) {
+	// 	if(input.type = "radio"){
+	// 		console.log('radio')
+	// 	}
+	// });
+	radio.getAttribute
 	console.log(attribute)
 	const keyframe = [
 		{
@@ -385,43 +392,47 @@ if(document.querySelector('#fpass')){
 		}, timing.duration)
 	})
 	// document.querySelector('body').style.backgroundColor = "blue";
-	const form = document.querySelector('.my-form');
-	console.log(form)
+	let switchedPage = false;
+	const aform = document.querySelector('.my-form');
+	// console.log(form)
 	const email = document.querySelector('.emailVal');
-	form.addEventListener('submit', (e) => submit(e))	
+	const code = document.querySelector('.code');
+	const verify = document.querySelector('.verify');
+	const firstVerify = document.querySelector('.first-verify');
+	aform.addEventListener('submit', (e) => submit(e))
 	
-	function submit(e){
+	function submit(e) {
 		e.preventDefault();
 		console.log(e.currentTarget)
 		let xhr = new XMLHttpRequest();
-			data = new FormData(form);
-		// console.log(data);
-		xhr.onload = function(){
-			const res = JSON.parse(xhr.response);
-			// console.log(xhr.response)	
+		data = new FormData(aform);
+		
+		xhr.onload = function () {
 			const status = xhr.status;
+			const res = JSON.parse(xhr.response);
+			console.log(res)
 			console.log(status);
-			if(status === 422){
-				email.innerHTML = `<div class="alert alert-danger m-2"><i class="fa fa-solid fa-exclamation"></i>${res.error}</div>`; 
-				setTimeout(() => {
+			if (status === 422) {
+				console.log(status);
+				email.innerHTML = `<div class="alert alert-danger m-2"><i class="fa fas fa-exclamation-triangle me-1"></i>${res.error}</div>`;
+				
+				if (Object.keys(res.errors).length) {
 					email.innerHTML = '';
-				}, 4000);
-			} else{
-			}
-			if(status === 200){
-				email.innerHTML = `<div class="alert alert-success m-2">${res.message}</div>`;
-				setTimeout(() => {
+					Object.keys(res.errors).forEach(function (key) {
+						const el = document.getElementById(key);
+						el.innerHTML = `<div class="alert alert-danger m-2 px-1"><i class="fa fas fa-exclamation-triangle me-1"></i>${res.errors[key]}</div>`
+					});
+				}
+			} else {
+				if (status === 200) {
+					email.innerHTML = `<div class="alert alert-success m-2">${res.message}</div>`;
+					// code.innerHTML = `<div class="bg-dark rounded"><p class="text-white text-center">${res.next}</p></div>`;
 					location.href = `${res.redirect}`;
-				}, 2000);
+				}
 			}
-			if(res.error.length)
-				email.innerHTML = `<div class="alert alert-danger m-2">${res.error}</div>`;
-			// } else {
-			// 	if(status === 200)
-			// // }
+			console.log(data);
 		}
-		console.log(data)
-		xhr.open("POST",`${attribute}`);
-		xhr.send(data);	
+		xhr.open("POST", `${attribute}`);
+		xhr.send(data);
 	}
 }

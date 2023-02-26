@@ -61,3 +61,11 @@ label {
 .otp:hover {
 	cursor: pointer;
 }
+
+.none {
+	display: none !important;
+}
+
+.codeInput {
+	border: 1px solid #333;
+}
