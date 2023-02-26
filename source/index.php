@@ -1,3 +1,17 @@
+<?php
+include './session.php';
+$message = NULL;
+$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
+if (isset($_POST['submit'])) {
+    if (!empty($_POST['email'])) {
+        // $conn->query("SELECT * FROM user_info LEFT JOIN news_subscribers ON news_subscribers.user_id=user_info.id");
+        $conn->query("INSERT INTO news_subscribers(email) VALUES($email)");
+    } else {
+        $message = '<span class="bg-red">Fill input please</span>';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,11 +69,14 @@
                 <button class="book">Book a session</button>
             </div>
             <div class="images">
-                <i class="fa-solid fa-arrow-left"></i>
-                <i class="fa-solid fa-arrow-right"></i>
+                <div class="icons">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
                 <div class="image-container">
                     <img name="slider" src="" alt="img">
                 </div>
+                <div></div>
             </div>
         </div>
     </section>
@@ -137,27 +154,46 @@
                 <span>NEWSLETTER</span>
                 <p>Subscribe to join The EDU Community</p>
             </div>
-            <div class="input">
-                <input type="email">
-                <input type="submit" value="Submit">
-            </div>
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                <div class="input">
+                    <input type="email" name="email">
+                    <?php if ($message) : ?>
+                    <div><?php echo $message; ?></div>
+                    <?php endif; ?>
+                    <input type="submit" value="Submit" name="submit">
+                </div>
+            </form>
         </div>
         <div class="links">
-            <div>
+            <div class="w-25">
                 <a href="#">ABOUT</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt inventore cum sunt dolor mollitia aliquam consequuntur deserunt dolores quia voluptas!</p>
+                <p>We EDU is a platform for schooling were you as a student can come and learn all that you can learn but here's the catch online!!! So rush now and buy your courses from various verified vendors. You will earn a certificate at the end of a certain
+                    course. The
+                    best part is that you can actually learn anything at all. Don't waste time learning at a fast pace just learn it at your own pace online. <button class="book">Read More</button></p>
             </div>
             <div>
-                <a href="#">ADDRESS</a>
-                <p>ONLINE Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, illo doloribus? Tenetur repellendus sapiente aliquam eius aperiam eligendi similique quos.</p>
-            </div>
-            <div>
-                <a href="#">USEFUL LINK</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt inventore cum sunt dolor mollitia aliquam consequuntur deserunt dolores quia voluptas!</p>
+                <div class="d-flex">
+                    <a href="#">USEFUL LINK</a>
+                </div>
+                <ul class="links-child align-items-center">
+                    <li>HOME<i class="text-center fa-regular fa-plus"></i></li>
+                    <li>ABOUT<i class="text-center fa-regular fa-plus"></i></li>
+                    <li>EXPLORE<i class="text-center fa-regular fa-plus"></i></li>
+                    <li>FAQ<i class="text-center fa-regular fa-plus"></i></li>
+                    <li>ATTRIBUTES<i class="text-center fa-regular fa-plus"></i></li>
+                    <li>CONTACT<i class="text-center fa-regular fa-plus"></i></li>
+                </ul>
             </div>
             <div>
                 <a href="#">LATEST</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt inventore cum sunt dolor mollitia aliquam consequuntur deserunt dolores quia voluptas!</p>
+                <div>
+                    <p>The best platform for learning today! </p>
+                    <button class="book">Read More</button>
+                </div>
+            </div>
+            <div class="flex-column jusify-content-center align-items-center logo">
+                <i class="fa fa-brands fa-slack fa-10x"></i>
+                <p>EDU</p>
             </div>
         </div>
     </footer>

@@ -2,7 +2,32 @@
 include './session.php';
 if (!$user)
     header('Location: ./relocate.php');
+$about = filter_input(INPUT_POST, 'about', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+if (isset($_POST['save'])) {
+    // print_r($user);
+    // exit();
 
+    // $q = $conn->query("SELECT * FROM user_about_info WHERE user_id = '$user->id'");
+    if ($user_about_count !== 0)
+        $conn->query("UPDATE user_about_info SET about = '$about' WHERE user_id = '$user->id'");
+    else
+        $conn->query("INSERT INTO user_about_info(about, user_id) VALUES('$about', '$user->id')");
+    echo '<b style="color:#000;">submited</b>';
+    print_r($_POST);
+    exit();
+}
+if (!empty($_GET) && isset($_GET['u'])) {
+    $other_user_id = $_GET['u'];
+    $q = $conn->query("SELECT * FROM user_info WHERE id = '$other_user_id'");
+
+    if ($q->num_rows) {
+        $user = $q->fetch_object();
+        $q = $conn->query("SELECT * FROM user_about_info WHERE user_id = '$user->id'");
+        $user_about_count = $q->num_rows;
+        if ($user_about_count)
+            $user_about = $q->fetch_object();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,9 +50,19 @@ if (!$user)
                 <div>
                     <span class="fs-2"><?= $user->user_name; ?></span>
                     <div>
-                        <div class="textarea"></div>
+                        <div class="textarea">
+                            <form action="#" method="POST" class="d-flex flex-column mb-2">
+                                <input type="text" class="p-4 w-75 mb-3" name="about" />
+                                <input type="submit" class="bg-dark w-75 text-white save p-2 rounded" value="Save" name="save">
+                            </form>
+                        </div>
                     </div>
-                    <button class="rounded-3 m-1 p-2 w-75 edit"><i class="fa-solid fa-pen mx-2"></i>Edit Profile</button>
+                    <?php if ($user_id === $other_user_id) : ?>
+                    <div class="btn-btn">
+                        <button class="rounded-3 m-1 p-2 w-75 edit"><i class="fa-solid fa-pen mx-2"></i>Edit Profile</button>
+                    </div>
+                    <?php endif; ?>
+                    <div class="d-flex flex-row w-100 operation-buttons"></div>
                     <div>
                         <i class="fa-light my-3 fa-user-group"></i>
                         <span><small class="mx-1">0</small>followers</span>
@@ -37,7 +72,7 @@ if (!$user)
                 </div>
             </div>
             <div class="w-100 ">
-                <?= $user->about ?>
+                <?= $user_about_count ? $user_about->about : NULL ?>
             </div>
         </div>
     </main>

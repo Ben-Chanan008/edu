@@ -9,7 +9,7 @@ if (!empty($_POST)) {
 	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 	$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 	$phone_number = filter_input(INPUT_POST, 'phone_number', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-	
+
 	if (!empty($name) && !empty($email) && !empty($password) && !empty($phone_number)) {
 		$statement = $conn->query("SELECT * FROM user_info WHERE user_name = '$name'");
 		$statement_email = $conn->query("SELECT * FROM user_info WHERE email = '$email'");
@@ -18,7 +18,7 @@ if (!empty($_POST)) {
 			$sql = "INSERT INTO user_info(user_name, password, phone_number, email) VALUES('$name', '$hashed', '$phone_number', '$email')";
 			if ($query = mysqli_query($conn, $sql)) {
 				$data['message'] = 'Registration Successful.<br><i class="fa fa-spin fa-spinner-third"></i> Please wait....';
-				$data['redirect'] = './logged_in.php';
+				$data['redirect'] = './edu.php';
 				http_response_code(200);
 			} else {
 				$data['message'] = 'Error occured';

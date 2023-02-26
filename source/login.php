@@ -4,32 +4,32 @@ include './session.php';
 $hasErr = true;
 $data = [];
 if ($user)
-	header('Location: ./edu.php');
+    header('Location: ./edu.php');
 if (!empty($_POST)) {
-	// http_response_code(200);
-	$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-	if (empty($email) && empty($password)) {
-		$data['message'] = 'Please fill in fields';
-		http_response_code(422);
-	} else {
-		// http_response_code(200);
-		// $data['message'] = 'Login successful <br> Please Wait...';
-		$query = $conn->query("SELECT * FROM user_info WHERE email = '$email'");
-		$user = $query->fetch_object();
+    // http_response_code(200);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    if (empty($email) && empty($password)) {
+        $data['message'] = 'Please fill in fields';
+        http_response_code(422);
+    } else {
+        // http_response_code(200);
+        // $data['message'] = 'Login successful <br> Please Wait...';
+        $query = $conn->query("SELECT * FROM user_info WHERE email = '$email'");
+        $user = $query->fetch_object();
 
-		if ($query->num_rows && password_verify($password, $user->password)) {
-			$_SESSION['edu'] = $user->id;
-			$data['message'] = 'Login Successful Please wait...';
-			$data['redirect'] = './edu.php';
-			http_response_code(200);
-		} else {
-			http_response_code(400);
-			$data['message'] = 'Invalid Credentials';
-		}
-	}
-	echo json_encode($data);
-	exit();
+        if ($query->num_rows && password_verify($password, $user->password)) {
+            $_SESSION['edu'] = $user->id;
+            $data['message'] = 'Login Successful Please wait...';
+            $data['redirect'] = './edu.php';
+            http_response_code(200);
+        } else {
+            http_response_code(400);
+            $data['message'] = 'Invalid Credentials';
+        }
+    }
+    echo json_encode($data);
+    exit();
 }
 ?>
 
@@ -58,7 +58,10 @@ if (!empty($_POST)) {
             </div>
             <div class="passErr"></div>
             <input type="submit" value="Submit" name="submit" class="mt-4">
+            <div class="d-flex">
+            </div>
             <div class="sign-up">
+                <p class="text-primary f-pass" role="button">Forgot password?</p>
                 <p>Already have an account</p>
                 <a href="./register.php"><span style="color: #ff7f50; text-decoration: underline;">Sign up</span></a>
             </div>

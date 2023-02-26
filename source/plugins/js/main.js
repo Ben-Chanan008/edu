@@ -2,6 +2,7 @@ if (document.querySelector('#index-page')) {
 	
 	const container = document.querySelector('.images');
 	const left = document.querySelector('.fa-arrow-left');
+	const logo = document.querySelector('.logo')
 	const right = document.querySelector('.fa-arrow-right');
 	const imagesContainer = document.querySelector('.image-container');
 	// const imgCls = document.querySelector('.images')
@@ -46,6 +47,9 @@ if (document.querySelector('#index-page')) {
 		}, 1500);
 		spinner.style.display = 'block';
 		body.style.overflow = 'hidden';
+	});
+	logo.addEventListener('click', () => {
+		location.href = './edu.php';
 	});
 }
 
@@ -185,16 +189,27 @@ if (document.querySelector('#register-page')) {
 		}
 	}
 	
+	phoneField.addEventListener('input', (e) => { 
+		console.log(`${errors.phoneFirstErr}`)
+		if(phoneField.value === ''){
+			phoneErr.innerHTML = `${errors.phoneFirstErr}`;	
+			// console.log(`${errors.phoneFirstErr}`)
+		}
+		if(phoneField.value !== '')
+			phoneErr.innerHTML = '';
+	});
 	phoneField.addEventListener('input', (e) => {
 		if (!phoneField.value.match(/^[0-9]*$/gi)) {
 			phoneErr.innerHTML = `${errors.phoneSecondErr}`
 			phoneField.value = ''
 		}
 		if (phoneField.value !== '') {
-			if (phoneField.value.match(/^[0-9]*$/gi))
+			if (phoneField.value.match(/^[0-9]*$/gi)){
 				phoneErr.innerHTML = '';
+			}
+			// if(phoneField.value === '')
 		}
-	})
+	});
 	nameField.addEventListener('input', (e) => {
 		if (nameField.value === '') {
 			nameErr.innerHTML = `${errors.nameErr}`
@@ -232,10 +247,13 @@ if (document.querySelector('#login')) {
 	const form = document.querySelector('form');
 	const pass = document.querySelector('.fa-eye');
 	// console.log(attrib)
+	const f_pass = document.querySelector('.f-pass');
 	const emailErr = document.querySelector('.emailErr');
 	const passErr = document.querySelector('.passErr');
 	const message = document.querySelector('.message');
-	
+	f_pass.addEventListener('click', (e) => {
+		location.href = './forgot-pass.php';
+	});
 	pass.addEventListener('click', () => {
 		pass.classList.remove('fa-eye');
 		pass.classList.add('fa-eye-slash');
@@ -300,6 +318,9 @@ if (document.querySelector('#profile')) {
 	const picContainer = document.querySelector('.user');
 	const edit = document.querySelector('.edit');
 	const textarea = document.querySelector('.textarea');
+	const opBtn = document.querySelector('.operation-buttons');
+	const btn = document.querySelector('.btn-btn');
+	const save = document.getElementsByClassName('save');
 	picContainer.addEventListener('mouseover', (e) => {
 		console.log(e)
 		picContainer.classList.remove('fa-user');
@@ -309,18 +330,61 @@ if (document.querySelector('#profile')) {
 		console.log(camera);
 		if (camera === true) {
 			// picContainer.addEventListener('click', () => {
-			
-			// });
-			console.log('e')
-			setTimeout(() => {
-				picContainer.classList.remove('fa-camera', 'fa-10x');
+				
+				// });
+				console.log('e')
+				setTimeout(() => {
+					picContainer.classList.remove('fa-camera', 'fa-10x');
 				picContainer.classList.add('fa-user', 'fa-7x');
 			}, 3000)
 		}
 	});
-	edit.addEventListener('click', () => {
-		textarea.innerHTML = '<textarea cols="35" row="10"></textarea>'
-	});
+	edit.addEventListener('click', buttons);
+	const self = "<?php htmlspecialchars($_SERVER['PHP_SELF']);?>";
+	
+	function buttons(){
+		textarea.style.display = 'block';
+		btn.innerHTML = '<div></div>';
+		opBtn.innerHTML = '<button class="bg-red p-2 w-75 text-white rounded" id="del"><i class="fas fa-bin"></i>Cancel</button>'
+		const del = document.getElementById('del');
+		console.log(del)
+		del.addEventListener('click', (e) => {
+			btn.innerHTML='<button class="rounded-3 m-1 p-2 w-75 edit"><i class="fa-solid fa-pen mx-2"></i>Edit Profile</button>'
+			opBtn.innerHTML = '<div></div>';
+			textarea.innerHTML = '';
+		});	
+		// setInterval(buttons, 10)
+	}
 	// picContainer.addEventListener('mouseout', (e) => {
 	// });
+}
+
+if(document.querySelector('#fpass')){
+	const attribute = document.form.getAttribute('action');
+	console.log(attribute)
+	// document.querySelector('body').style.backgroundColor = "blue";
+	const form = document.querySelector('.my-form');
+	console.log(form)
+	const email = document.querySelector('.emailVal');
+	form.addEventListener('submit', (e) => submit(e))	
+	
+	function submit(e){
+		e.preventDefault();
+		console.log(e.currentTarget)
+		let xhr = new XMLHttpRequest();
+			data = new FormData(form);
+		// console.log(data);
+		xhr.onload = function(){
+			const res = JSON.parse(xhr.response);
+			// console.log(xhr.response)	
+			const status = xhr.status;
+			console.log(status);
+			if(status === 422){
+				console.log(email.innerHTML = `${res.error}`); 
+			}
+		}
+		console.log(data)
+		xhr.open("POST",`${attribute}`);
+		xhr.send(data);	
+	}
 }
